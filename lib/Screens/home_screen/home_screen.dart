@@ -4,7 +4,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:food_app/Screens/home_screen/side_drawer.dart';
 import 'package:food_app/Screens/home_screen/single_product.dart';
+import 'package:food_app/Screens/product_overview/product_overview.dart';
 import 'package:food_app/config/config.dart';
+import 'package:get/get.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -162,22 +164,42 @@ class HomeScreen extends StatelessWidget {
           child: Row(
             children: [
               SingleProdcut(
-                onTap: () {},
+                onTap: () {
+                  Get.to(() => const ProductOverView(
+                        productName: 'Chines Herbs',
+                        productimage: 'assets/chines_herbs.png',
+                      ));
+                },
                 productImage: 'assets/chines_herbs.png',
                 productName: 'Chines Herbs',
               ),
               SingleProdcut(
-                onTap: () {},
+                onTap: () {
+                  Get.to(() => const ProductOverView(
+                        productName: 'Herbal Medicine',
+                        productimage: 'assets/herbal_medicine.png',
+                      ));
+                },
                 productImage: 'assets/herbal_medicine.png',
                 productName: 'Herbal Medicine',
               ),
               SingleProdcut(
-                onTap: () {},
+                onTap: () {
+                  Get.to(() => const ProductOverView(
+                        productName: 'Herbs and Spices',
+                        productimage: 'assets/spice_herb.png',
+                      ));
+                },
                 productImage: 'assets/spice_herb.png',
                 productName: 'Herbs and Spices',
               ),
               SingleProdcut(
-                onTap: () {},
+                onTap: () {
+                  Get.to(() => const ProductOverView(
+                        productName: 'Ayuveda Medicine',
+                        productimage: 'assets/ayuveda_medicine.png',
+                      ));
+                },
                 productImage: 'assets/ayuveda_medicine.png',
                 productName: 'Ayuveda Medicine',
               ),

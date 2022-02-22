@@ -58,7 +58,7 @@ class SingleProdcut extends StatelessWidget {
                             children: [
                               Expanded(
                                 child: Container(
-                                  padding: EdgeInsets.only(left: 5),
+                                  padding: const EdgeInsets.only(left: 5),
                                   height: 30,
                                   width: 50,
                                   decoration: BoxDecoration(
