@@ -1,6 +1,10 @@
 // ignore_for_file: deprecated_member_use
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:food_app/Screens/home_screen/side_drawer.dart';
+import 'package:food_app/Screens/home_screen/single_product.dart';
+import 'package:food_app/config/config.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -8,26 +12,25 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xffcbcbcb),
-      drawer: const Drawer(),
+      drawer: SideDrawer(),
       appBar: AppBar(
         iconTheme: const IconThemeData(color: Colors.black),
-        actions: const [
+        actions: [
           CircleAvatar(
             radius: 12,
-            backgroundColor: Color(0xffd4d181),
-            child: Icon(
+            backgroundColor: primaryColor,
+            child: const Icon(
               Icons.search,
               size: 17,
               color: Colors.black,
             ),
           ),
           Padding(
-            padding: EdgeInsets.symmetric(horizontal: 5),
+            padding: const EdgeInsets.symmetric(horizontal: 5),
             child: CircleAvatar(
               radius: 12,
-              backgroundColor: Color(0xffd4d181),
-              child: Icon(
+              backgroundColor: primaryColor,
+              child: const Icon(
                 Icons.shop,
                 size: 17,
                 color: Colors.black,
@@ -39,7 +42,7 @@ class HomeScreen extends StatelessWidget {
           'Home',
           style: TextStyle(color: Colors.black),
         ),
-        backgroundColor: const Color(0xffd6b738),
+        backgroundColor: primaryColor,
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
@@ -67,9 +70,9 @@ class HomeScreen extends StatelessWidget {
                             child: Container(
                               height: 50,
                               width: 100,
-                              decoration: const BoxDecoration(
-                                color: Color(0xffd6b738),
-                                borderRadius: BorderRadius.only(
+                              decoration: BoxDecoration(
+                                color: primaryColor,
+                                borderRadius: const BorderRadius.only(
                                   bottomRight: Radius.circular(50),
                                   bottomLeft: Radius.circular(50),
                                 ),
@@ -118,61 +121,14 @@ class HomeScreen extends StatelessWidget {
                 ],
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 15),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                // ignore: prefer_const_literals_to_create_immutables
-                children: [
-                  const Text(
-                    'Hearbs Seasonings ',
-                    style: TextStyle(
-                      fontSize: 24,
-                    ),
-                  ),
-                  const Text(
-                    'View All',
-                    style: TextStyle(color: Colors.grey),
-                  ),
-                ],
-              ),
-            ),
             SingleChildScrollView(
               scrollDirection: Axis.horizontal,
-              child: Row(
+              child: Column(
                 children: [
-                  singleProductCart(),
-                  singleProductCart(),
-                  singleProductCart(),
-                  singleProductCart(),
-                ],
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(
-                vertical: 15,
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                // ignore: prefer_const_literals_to_create_immutables
-                children: [
-                  const Text(
-                    'Fresh Fruits',
-                    style: TextStyle(
-                      fontSize: 24,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: Row(
-                children: [
-                  singleProductCart(),
-                  singleProductCart(),
-                  singleProductCart(),
-                  singleProductCart(),
+                  _buildHerbsProduct(context),
+                  _buildFreshProduct(),
+                  _buildFreshProduct(),
+                  _buildHerbsProduct(context),
                 ],
               ),
             ),
@@ -182,109 +138,101 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  Widget singleProductCart() {
-    return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 10),
-      height: 230,
-      width: 150,
-      decoration: BoxDecoration(
-          color: const Color(0xffd9dad9),
-          borderRadius: BorderRadius.circular(10)),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Expanded(
-            flex: 2,
-            child: Image.asset(
-              'assets/basil.png',
-            ),
+  Widget _buildHerbsProduct(context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 20),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+
+            // ignore: prefer_const_literals_to_create_immutables
+            children: [
+              const Text('Herbs Seasoning'),
+              const Text(
+                'view all',
+                style: TextStyle(color: Colors.grey),
+              )
+            ],
           ),
-          Expanded(
-              child: Container(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Text(
-                    'Fresh Basils',
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  const Text(
-                    '50\$/50 Gram',
-                    style: TextStyle(color: Colors.grey),
-                  ),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: Container(
-                          padding: EdgeInsets.only(left: 5),
-                          height: 30,
-                          width: 50,
-                          decoration: BoxDecoration(
-                              border: Border.all(color: Colors.grey),
-                              borderRadius: BorderRadius.circular(8)),
-                          child: Row(
-                            children: const [
-                              Expanded(
-                                  child: Text(
-                                '50 Gram',
-                                style: TextStyle(fontSize: 10),
-                              )),
-                              Center(
-                                  child: Icon(
-                                Icons.arrow_drop_down,
-                                size: 20,
-                                color: Colors.yellow,
-                              )),
-                            ],
-                          ),
-                        ),
-                      ),
-                      const SizedBox(
-                        width: 5,
-                      ),
-                      Expanded(
-                        child: Container(
-                          height: 30,
-                          width: 50,
-                          decoration: BoxDecoration(
-                              border: Border.all(color: Colors.grey),
-                              borderRadius: BorderRadius.circular(8)),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: const [
-                              Icon(
-                                Icons.remove,
-                                size: 15,
-                                color: Color(0xffd0b84c),
-                              ),
-                              Text(
-                                '1',
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    color: Color(0xffd0b84c)),
-                              ),
-                              Icon(
-                                Icons.add,
-                                size: 15,
-                                color: Color(0xffd0b84c),
-                              )
-                            ],
-                          ),
-                        ),
-                      )
-                    ],
-                  )
-                ],
+        ),
+        SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          child: Row(
+            children: [
+              SingleProdcut(
+                onTap: () {},
+                productImage: 'assets/chines_herbs.png',
+                productName: 'Chines Herbs',
               ),
-            ),
-          ))
-        ],
-      ),
+              SingleProdcut(
+                onTap: () {},
+                productImage: 'assets/herbal_medicine.png',
+                productName: 'Herbal Medicine',
+              ),
+              SingleProdcut(
+                onTap: () {},
+                productImage: 'assets/spice_herb.png',
+                productName: 'Herbs and Spices',
+              ),
+              SingleProdcut(
+                onTap: () {},
+                productImage: 'assets/ayuveda_medicine.png',
+                productName: 'Ayuveda Medicine',
+              ),
+            ],
+          ),
+        )
+      ],
+    );
+  }
+
+  Widget _buildFreshProduct() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: EdgeInsets.symmetric(vertical: 20),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: const [
+              Text('Fresh Products'),
+              Text(
+                'view all',
+                style: TextStyle(color: Colors.grey),
+              )
+            ],
+          ),
+        ),
+        SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          child: Row(
+            children: [
+              SingleProdcut(
+                onTap: () {},
+                productImage: 'assets/fresh_fruit_basket.png',
+                productName: 'Fresh Fruit Basket',
+              ),
+              SingleProdcut(
+                onTap: () {},
+                productImage: 'assets/green_lemon.png',
+                productName: 'Green Lemon',
+              ),
+              SingleProdcut(
+                onTap: () {},
+                productImage: 'assets/heartoffruit-.png',
+                productName: 'Heart Of Fruit',
+              ),
+              SingleProdcut(
+                onTap: () {},
+                productImage: 'assets/fresh_fruit_basket.png',
+                productName: 'Fresh Fruit Basket',
+              ),
+            ],
+          ),
+        )
+      ],
     );
   }
 }
