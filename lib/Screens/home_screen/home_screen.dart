@@ -63,58 +63,56 @@ class HomeScreen extends StatelessWidget {
                 children: [
                   Expanded(
                     flex: 2,
-                    child: Container(
-                      child: Column(
-                        children: [
-                          Padding(
-                            padding:
-                                const EdgeInsets.only(right: 130, bottom: 10),
-                            child: Container(
-                              height: 50,
-                              width: 100,
-                              decoration: BoxDecoration(
-                                color: primaryColor,
-                                borderRadius: const BorderRadius.only(
-                                  bottomRight: Radius.circular(50),
-                                  bottomLeft: Radius.circular(50),
-                                ),
+                    child: Column(
+                      children: [
+                        Padding(
+                          padding:
+                              const EdgeInsets.only(right: 130, bottom: 10),
+                          child: Container(
+                            height: 50,
+                            width: 100,
+                            decoration: BoxDecoration(
+                              color: primaryColor,
+                              borderRadius: const BorderRadius.only(
+                                bottomRight: Radius.circular(50),
+                                bottomLeft: Radius.circular(50),
                               ),
-                              child: const Center(
-                                child: Text(
-                                  'Vegi',
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 24,
-                                    shadows: [
-                                      BoxShadow(
-                                          blurRadius: 10,
-                                          offset: Offset(3, 3),
-                                          color: Colors.green),
-                                    ],
-                                  ),
+                            ),
+                            child: const Center(
+                              child: Text(
+                                'Vegi',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 24,
+                                  shadows: [
+                                    BoxShadow(
+                                        blurRadius: 10,
+                                        offset: Offset(3, 3),
+                                        color: Colors.green),
+                                  ],
                                 ),
                               ),
                             ),
                           ),
-                          Text(
-                            '30% Off',
+                        ),
+                        Text(
+                          '30% Off',
+                          style: TextStyle(
+                            fontSize: 40,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.green[100],
+                          ),
+                        ),
+                        const Padding(
+                          padding: EdgeInsets.only(left: 50),
+                          child: Text(
+                            'on all vegetables and products',
                             style: TextStyle(
-                              fontSize: 40,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.green[100],
+                              color: Colors.white,
                             ),
                           ),
-                          const Padding(
-                            padding: EdgeInsets.only(left: 50),
-                            child: Text(
-                              'on all vegetables and products',
-                              style: TextStyle(
-                                color: Colors.white,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
                   ),
                   Expanded(
@@ -215,7 +213,7 @@ class HomeScreen extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
-          padding: EdgeInsets.symmetric(vertical: 20),
+          padding: const EdgeInsets.symmetric(vertical: 20),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: const [

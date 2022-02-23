@@ -1,12 +1,8 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:food_app/Screens/home_screen/home_screen.dart';
-import 'package:food_app/auth/sign_in.dart';
 import 'package:food_app/config/config.dart';
 import 'package:get/get.dart';
 import 'package:firebase_core/firebase_core.dart';
-
-import 'Screens/product_overview/product_overview.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
