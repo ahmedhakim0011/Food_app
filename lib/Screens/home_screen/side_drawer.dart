@@ -1,14 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:food_app/Screens/home_screen/home_screen.dart';
+import 'package:food_app/Screens/my_profile/my_profile.dart';
 import 'package:food_app/config/config.dart';
+import 'package:get/get.dart';
 
 class SideDrawer extends StatelessWidget {
   Widget listTile({
+    VoidCallback? onTap,
     IconData? icon,
     String? title,
     Color? color,
   }) {
     return ListTile(
-      onTap: () {},
+      onTap: onTap,
       iconColor: color,
       textColor: color,
       leading: Icon(
@@ -75,6 +79,9 @@ class SideDrawer extends StatelessWidget {
               ),
             ),
             listTile(
+              onTap: () {
+                Get.to(() => const HomeScreen());
+              },
               icon: Icons.home,
               title: 'Home',
               color: Colors.black,
@@ -85,6 +92,9 @@ class SideDrawer extends StatelessWidget {
               color: Colors.black,
             ),
             listTile(
+              onTap: () {
+                Get.to(() => MyProfile());
+              },
               icon: Icons.person_outline,
               title: 'My Profile',
               color: Colors.black,

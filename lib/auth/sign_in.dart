@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_signin_button/button_list.dart';
 import 'package:flutter_signin_button/button_view.dart';
 import 'package:food_app/Screens/home_screen/home_screen.dart';
+import 'package:food_app/config/config.dart';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
@@ -62,8 +63,8 @@ class _SignInState extends State<SignIn> {
                       SignInButton(
                         Buttons.Google,
                         text: "Sign in with Google",
-                        onPressed: () {
-                          _googleSignUp().then(
+                        onPressed: () async {
+                          await _googleSignUp().then(
                               (value) => Get.to(() => const HomeScreen()));
                         },
                       ),

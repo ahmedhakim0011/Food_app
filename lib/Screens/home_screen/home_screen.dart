@@ -2,6 +2,7 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:food_app/Screens/home_screen/seachItem/searchItem.dart';
 import 'package:food_app/Screens/home_screen/side_drawer.dart';
 import 'package:food_app/Screens/home_screen/single_product.dart';
 import 'package:food_app/Screens/product_overview/product_overview.dart';
@@ -21,10 +22,15 @@ class HomeScreen extends StatelessWidget {
           CircleAvatar(
             radius: 12,
             backgroundColor: primaryColor,
-            child: const Icon(
-              Icons.search,
-              size: 17,
-              color: Colors.black,
+            child: IconButton(
+              onPressed: () {
+                Get.to(() => SearchItem());
+              },
+              icon: const Icon(
+                Icons.search,
+                size: 17,
+                color: Colors.black,
+              ),
             ),
           ),
           Padding(
@@ -32,10 +38,13 @@ class HomeScreen extends StatelessWidget {
             child: CircleAvatar(
               radius: 12,
               backgroundColor: primaryColor,
-              child: const Icon(
-                Icons.shop,
-                size: 17,
-                color: Colors.black,
+              child: IconButton(
+                onPressed: () {},
+                icon: const Icon(
+                  Icons.shop,
+                  size: 17,
+                  color: Colors.black,
+                ),
               ),
             ),
           ),
