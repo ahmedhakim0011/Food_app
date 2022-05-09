@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:food_app/Screens/home_screen/home_screen.dart';
 import 'package:food_app/Screens/my_profile/my_profile.dart';
+import 'package:food_app/Screens/review_cart/review_cart.dart';
 import 'package:food_app/config/config.dart';
 import 'package:get/get.dart';
 
@@ -87,6 +88,9 @@ class SideDrawer extends StatelessWidget {
               color: Colors.black,
             ),
             listTile(
+              onTap: () {
+                Get.to(() => const ReviewCart());
+              },
               icon: Icons.shop_outlined,
               title: 'Review Cart',
               color: Colors.black,

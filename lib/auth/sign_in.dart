@@ -111,5 +111,6 @@ class _SignInState extends State<SignIn> {
     } catch (error) {
       print(error);
     }
+    return null;
   }
 }

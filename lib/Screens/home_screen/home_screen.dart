@@ -2,18 +2,52 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:food_app/Screens/home_screen/seachItem/searchItem.dart';
+import 'package:food_app/Screens/home_screen/seachItem/search_Item.dart';
 import 'package:food_app/Screens/home_screen/side_drawer.dart';
 import 'package:food_app/Screens/home_screen/single_product.dart';
 import 'package:food_app/Screens/product_overview/product_overview.dart';
 import 'package:food_app/config/config.dart';
+import 'package:food_app/providers/productProvider/productProvider.dart';
 import 'package:get/get.dart';
+import 'package:provider/provider.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
 
   @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  ProductProvider? productProvider;
+  @override
+  void initState() {
+    ProductProvider fetchHerbsProductProvider =
+        Provider.of(context, listen: false);
+    fetchHerbsProductProvider.fetchHerbsProductData();
+    super.initState();
+
+    ProductProvider fetchFreshProductProvider =
+        Provider.of(context, listen: false);
+    fetchFreshProductProvider.fetchFreshProductData();
+
+    super.initState();
+
+    ProductProvider fetchDryFruitsProductData =
+        Provider.of(context, listen: false);
+    fetchDryFruitsProductData.fetchDryFruitsProductData();
+    super.initState();
+
+    ProductProvider fetchWinterProductsProvider =
+        Provider.of(context, listen: false);
+    fetchWinterProductsProvider.fetchWinterProducts();
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    productProvider = Provider.of(context);
+
     return Scaffold(
       drawer: SideDrawer(),
       appBar: AppBar(
@@ -24,7 +58,7 @@ class HomeScreen extends StatelessWidget {
             backgroundColor: primaryColor,
             child: IconButton(
               onPressed: () {
-                Get.to(() => SearchItem());
+                Get.to(() => SearchItem(search: productProvider!.search));
               },
               icon: const Icon(
                 Icons.search,
@@ -130,16 +164,13 @@ class HomeScreen extends StatelessWidget {
                 ],
               ),
             ),
-            SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: Column(
-                children: [
-                  _buildHerbsProduct(context),
-                  _buildFreshProduct(),
-                  _buildFreshProduct(),
-                  _buildHerbsProduct(context),
-                ],
-              ),
+            Column(
+              children: [
+                _buildHerbsProduct(),
+                _buildFreshProduct(),
+                _buildDryFruitsProduct(),
+                _buildWinterProduct(),
+              ],
             ),
           ],
         ),
@@ -147,21 +178,24 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildHerbsProduct(context) {
+  Widget _buildHerbsProduct() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 20),
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-
-            // ignore: prefer_const_literals_to_create_immutables
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               const Text('Herbs Seasoning'),
-              const Text(
-                'view all',
-                style: TextStyle(color: Colors.grey),
+              GestureDetector(
+                onTap: () => Get.to(SearchItem(
+                  search: productProvider!.getHerbsProductList,
+                )),
+                child: const Text(
+                  'view all',
+                  style: TextStyle(color: Colors.grey),
+                ),
               )
             ],
           ),
@@ -169,48 +203,20 @@ class HomeScreen extends StatelessWidget {
         SingleChildScrollView(
           scrollDirection: Axis.horizontal,
           child: Row(
-            children: [
-              SingleProdcut(
+            children: productProvider!.getHerbsProductList.map((herbsProduct) {
+              return SingleProdcut(
                 onTap: () {
-                  Get.to(() => const ProductOverView(
-                        productName: 'Chines Herbs',
-                        productimage: 'assets/chines_herbs.png',
+                  Get.to(() => ProductOverView(
+                        productName: herbsProduct.productName,
+                        productPrice: herbsProduct.productPrice,
+                        productimage: herbsProduct.productImage,
                       ));
                 },
-                productImage: 'assets/chines_herbs.png',
-                productName: 'Chines Herbs',
-              ),
-              SingleProdcut(
-                onTap: () {
-                  Get.to(() => const ProductOverView(
-                        productName: 'Herbal Medicine',
-                        productimage: 'assets/herbal_medicine.png',
-                      ));
-                },
-                productImage: 'assets/herbal_medicine.png',
-                productName: 'Herbal Medicine',
-              ),
-              SingleProdcut(
-                onTap: () {
-                  Get.to(() => const ProductOverView(
-                        productName: 'Herbs and Spices',
-                        productimage: 'assets/spice_herb.png',
-                      ));
-                },
-                productImage: 'assets/spice_herb.png',
-                productName: 'Herbs and Spices',
-              ),
-              SingleProdcut(
-                onTap: () {
-                  Get.to(() => const ProductOverView(
-                        productName: 'Ayuveda Medicine',
-                        productimage: 'assets/ayuveda_medicine.png',
-                      ));
-                },
-                productImage: 'assets/ayuveda_medicine.png',
-                productName: 'Ayuveda Medicine',
-              ),
-            ],
+                productImage: herbsProduct.productImage.toString(),
+                productName: herbsProduct.productName,
+                productPrice: herbsProduct.productPrice,
+              );
+            }).toList(),
           ),
         )
       ],
@@ -225,11 +231,16 @@ class HomeScreen extends StatelessWidget {
           padding: const EdgeInsets.symmetric(vertical: 20),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: const [
-              Text('Fresh Products'),
-              Text(
-                'view all',
-                style: TextStyle(color: Colors.grey),
+            children: [
+              const Text('Fresh Products'),
+              GestureDetector(
+                onTap: () => Get.to(SearchItem(
+                  search: productProvider!.getfreshProductList,
+                )),
+                child: const Text(
+                  'view all',
+                  style: TextStyle(color: Colors.grey),
+                ),
               )
             ],
           ),
@@ -237,28 +248,112 @@ class HomeScreen extends StatelessWidget {
         SingleChildScrollView(
           scrollDirection: Axis.horizontal,
           child: Row(
+            children: productProvider!.getfreshProductList.map((freshProducts) {
+              return SingleProdcut(
+                onTap: () {
+                  Get.to(() => ProductOverView(
+                        productName: freshProducts.productName,
+                        productPrice: freshProducts.productPrice,
+                        productimage: freshProducts.productImage,
+                      ));
+                },
+                productImage: freshProducts.productImage.toString(),
+                productName: freshProducts.productName,
+                productPrice: freshProducts.productPrice,
+              );
+            }).toList(),
+          ),
+        )
+      ],
+    );
+  }
+
+  Widget _buildDryFruitsProduct() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 20),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              SingleProdcut(
-                onTap: () {},
-                productImage: 'assets/fresh_fruit_basket.png',
-                productName: 'Fresh Fruit Basket',
-              ),
-              SingleProdcut(
-                onTap: () {},
-                productImage: 'assets/green_lemon.png',
-                productName: 'Green Lemon',
-              ),
-              SingleProdcut(
-                onTap: () {},
-                productImage: 'assets/heartoffruit-.png',
-                productName: 'Heart Of Fruit',
-              ),
-              SingleProdcut(
-                onTap: () {},
-                productImage: 'assets/fresh_fruit_basket.png',
-                productName: 'Fresh Fruit Basket',
-              ),
+              Text('Dry Fruits'),
+              GestureDetector(
+                onTap: () => Get.to(SearchItem(
+                  search: productProvider!.dryFruitsProductList,
+                )),
+                child: const Text(
+                  'view all',
+                  style: TextStyle(color: Colors.grey),
+                ),
+              )
             ],
+          ),
+        ),
+        SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          child: Row(
+            children: productProvider!.getDryFruitsProductList
+                .map((dryFruitsProduct) {
+              return SingleProdcut(
+                onTap: () {
+                  Get.to(() => ProductOverView(
+                        productName: dryFruitsProduct.productName,
+                        productPrice: dryFruitsProduct.productPrice,
+                        productimage: dryFruitsProduct.productImage,
+                      ));
+                },
+                productImage: dryFruitsProduct.productImage.toString(),
+                productName: dryFruitsProduct.productName,
+                productPrice: dryFruitsProduct.productPrice,
+              );
+            }).toList(),
+          ),
+        )
+      ],
+    );
+  }
+
+  Widget _buildWinterProduct() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 20),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              const Text('Winter Products'),
+              GestureDetector(
+                onTap: () => Get.to(SearchItem(
+                  search: productProvider!.winterProductList,
+                )),
+                child: const Text(
+                  'view all',
+                  style: TextStyle(color: Colors.grey),
+                ),
+              )
+            ],
+          ),
+        ),
+        SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          child: Row(
+            children:
+                productProvider!.getWinterProductList.map((winterProducts) {
+              return SingleProdcut(
+                onTap: () {
+                  Get.to(() => ProductOverView(
+                        productName: winterProducts.productName,
+                        productPrice: winterProducts.productPrice,
+                        productimage: winterProducts.productImage,
+                      ));
+                },
+                productImage: winterProducts.productImage.toString(),
+                productName: winterProducts.productName,
+                productPrice: winterProducts.productPrice,
+              );
+            }).toList(),
           ),
         )
       ],

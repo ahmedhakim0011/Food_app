@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:food_app/Screens/home_screen/home_screen.dart';
-import 'package:food_app/Screens/home_screen/seachItem/searchItem.dart';
-import 'package:food_app/auth/sign_in.dart';
+
 import 'package:food_app/config/config.dart';
+import 'package:food_app/providers/productProvider/productProvider.dart';
+import 'package:food_app/widgets/themes.dart';
 import 'package:get/get.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:provider/provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -18,20 +20,17 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return GetMaterialApp(
-        title: 'Flutter Demo',
-        debugShowCheckedModeBanner: false,
-        theme: ThemeData(
-          appBarTheme: AppBarTheme(
-            backgroundColor: primaryColor,
-          ),
-          primaryColor: primaryColor,
-          scaffoldBackgroundColor: scaffoldBackgroundColor,
-          primarySwatch: Colors.blue,
-        ),
-        initialRoute: '/',
-        routes: {
-          '/': (context) => const SignIn(),
-        });
+    return ChangeNotifierProvider<ProductProvider>(
+      create: (context) => ProductProvider(),
+      child: GetMaterialApp(
+          themeMode: ThemeMode.system,
+          debugShowCheckedModeBanner: false,
+          theme: MyTheme.lightTheme(context),
+          darkTheme: MyTheme.darkTheme(context),
+          initialRoute: '/',
+          routes: {
+            '/': (context) => const HomeScreen(),
+          }),
+    );
   }
 }

@@ -6,8 +6,10 @@ enum BestTutorSite { javatpoint, w3schools, tutorialandexample }
 class ProductOverView extends StatefulWidget {
   final String? productName;
   final String? productimage;
+  final int? productPrice;
 
-  const ProductOverView({this.productName, this.productimage});
+  const ProductOverView(
+      {this.productName, this.productimage, this.productPrice});
 
   @override
   State<ProductOverView> createState() => _ProductOverViewState();
@@ -103,10 +105,10 @@ class _ProductOverViewState extends State<ProductOverView> {
                       style: const TextStyle(
                           fontSize: 22, fontWeight: FontWeight.bold),
                     ),
-                    subtitle: const Text(
-                      '\$50',
-                      style:
-                          TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                    subtitle: Text(
+                      '\$${widget.productPrice}',
+                      style: const TextStyle(
+                          fontSize: 18, fontWeight: FontWeight.bold),
                     ),
                   ),
                   Container(
@@ -116,7 +118,7 @@ class _ProductOverViewState extends State<ProductOverView> {
                     ),
                     height: 250,
                     padding: const EdgeInsets.all(40),
-                    child: Image.asset(widget.productimage.toString()),
+                    child: Image.network(widget.productimage.toString()),
                   ),
                   Container(
                     padding: const EdgeInsets.symmetric(
@@ -151,7 +153,7 @@ class _ProductOverViewState extends State<ProductOverView> {
                             ),
                           ],
                         ),
-                        const Text('\$50'),
+                        Text('\$${widget.productPrice}'),
                         Container(
                           padding: const EdgeInsets.symmetric(
                               horizontal: 30, vertical: 10),

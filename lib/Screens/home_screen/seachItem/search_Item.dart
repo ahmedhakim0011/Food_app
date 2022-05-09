@@ -1,12 +1,28 @@
 import 'package:flutter/material.dart';
-import 'package:food_app/Screens/home_screen/seachItem/searchItemWidget.dart';
+import 'package:food_app/model/productModel.dart';
+import 'package:food_app/widgets/singleItemWidget.dart';
 import 'package:food_app/config/config.dart';
 
-class SearchItem extends StatelessWidget {
-  const SearchItem({Key? key}) : super(key: key);
+class SearchItem extends StatefulWidget {
+  final List<ProductModel>? search;
+  SearchItem({this.search});
+
+  @override
+  State<SearchItem> createState() => _SearchItemState();
+}
+
+class _SearchItemState extends State<SearchItem> {
+  String query = "";
+  searchItem(String query) {
+    List<ProductModel> searchFood = widget.search!.where((element) {
+      return element.productName!.toLowerCase().contains(query);
+    }).toList();
+    return searchFood;
+  }
 
   @override
   Widget build(BuildContext context) {
+    List<ProductModel>? _searchItem = searchItem(query);
     return Scaffold(
       appBar: AppBar(
         iconTheme: const IconThemeData(color: Colors.black),
@@ -36,6 +52,12 @@ class SearchItem extends StatelessWidget {
             height: 52,
             margin: const EdgeInsets.symmetric(horizontal: 20),
             child: TextField(
+              onChanged: (value) {
+                print(value);
+                setState(() {
+                  query = value;
+                });
+              },
               decoration: InputDecoration(
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(30),
@@ -52,12 +74,16 @@ class SearchItem extends StatelessWidget {
           const SizedBox(
             height: 10,
           ),
-          const SearchItemWidget(),
-          const SearchItemWidget(),
-          const SearchItemWidget(),
-          const SearchItemWidget(),
-          const SearchItemWidget(),
-          const SearchItemWidget(),
+          Column(
+            children: _searchItem!.map((data) {
+              return SingleItemWidget(
+                isBool: false,
+                productImage: data.productImage,
+                productName: data.productName,
+                productPrice: data.productPrice,
+              );
+            }).toList(),
+          ),
         ],
       ),
     );
